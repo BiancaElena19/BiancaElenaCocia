@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Gazetteer</title>
+        
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel ="stylesheet" href="project1/easy-button.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+        
+        
+      
+    </head>
+    <body>
+      <span id="selectContainer">
+        <select id="countrySelect" class="form-select form-control shadow-sm">
+          <option value="">--Please Select Country--</option>
+        </select>
+      </span>
+        <div id="map"></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+       
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+        <script src="myscript.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+        <script src="project1/easy-button.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">Country Information</h5>
+                <i class="bi bi-info"></i>
+              </div>
+              <div class="modal-body">
+                <h6 id="countryName" class="modal-sub-header"></h6>
+                <hr>
+                <ul class="dem">
+                  <li class="listItem">Capital City: <span class="test" id="capital"></span></li>
+                  <li class="listItem">Continent: <span class="test" id="continent"></span></li>
+                  <li class="listItem">Population: <span class="test" id="population"></span></li>
+                  <li class="listItem">Currency: <span class="test" id="currencyCode"></span></li>
+                  <li class="listItem">Area (km<sup>2</sup>): <span class="test" id="area"></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+  
+              
+
+    
+  </body>
+  </html>
+    
