@@ -1,8 +1,13 @@
 <?php
 
-	$executionStartTime = microtime(true) / 1000;
+	
 
-	$url='http://api.geonames.org/countryInfoJSON?formatted=true&lang=en' . '&country=' . $_REQUEST['geonamesInfo'] . '&username=pez_gordo&style=full';
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
+
+	$executionStartTime = microtime(true);
+
+	$url='http://api.geonames.org/countryInfoJSON?formatted=true&lang=en'  . '&country=' . $_REQUEST ['country'] . '&username=BiancaCocia&style=full';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -17,8 +22,8 @@
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
-	$output['status']['description'] = "succes";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+	$output['status']['description'] = "success";
+	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
 	$output['data'] = $decode['geonames'];
 	
 	header('Content-Type: application/json; charset=UTF-8');

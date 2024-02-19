@@ -6,15 +6,15 @@
         <title>Gazetteer</title>
         
         
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="style.css">
-        <link rel ="stylesheet" href="project1/easy-button.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+        
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="style.css">
         
         
       
@@ -26,44 +26,111 @@
         </select>
       </span>
         <div id="map"></div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-       
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
-        <script src="myscript.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-        <script src="project1/easy-button.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+        
 
-
-        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
+        <!--  CountryInfo -->
+      
+        <div class="modal fade" id="countryInfoModal" role="dialog">
+          <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="infoModalLabel">Country Information</h5>
-                <i class="bi bi-info"></i>
+                <h5 class="modal-title">Country Info</h5>
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
-                <h6 id="countryName" class="modal-sub-header"></h6>
-                <hr>
-                <ul class="dem">
-                  <li class="listItem">Capital City: <span class="test" id="capital"></span></li>
-                  <li class="listItem">Continent: <span class="test" id="continent"></span></li>
-                  <li class="listItem">Population: <span class="test" id="population"></span></li>
-                  <li class="listItem">Currency: <span class="test" id="currencyCode"></span></li>
-                  <li class="listItem">Area (km<sup>2</sup>): <span class="test" id="area"></span></li>
-                </ul>
+                <h5 id="countryName"></h5>
+                <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <th>Capital</th>
+                      <td id="Capital"></td>
+                    </tr>
+                    <tr>
+                      <th>Population</th>
+                      <td id="Population"></td>
+                    </tr>
+                    <tr>
+                      <th>Languages</th>
+                      <td id="Languages"></td>
+                    </tr>
+                    <tr>
+                      <th>AreaInSqKm</th>
+                      <td id="areaInSqKm"></td>
+                    </tr>
+                    <th>Currency Code</th>
+                    <td id="CurrencyCode"></td>
+                  </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+            
+              
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
         </div>
-        
-  
-              
+    </div>
 
-    
+
+<!--Modal Weather-->
+<div class="modal fade" id="weatherModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Weather Report</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-dark justify-content-center">
+                  <div class="card text-white bg-primary mb-3" style="width:auto;" id="weatherIcon">
+                    <div class="card-header"><span id= "placeWeather"></span></div>
+                    <img class="card-img-top" src="/project1/weather.jpg" alt="Weather Icon">
+                    <div class="card-body">
+                      <p class="card-text"><span id="tempWeather"></span><span>&#8451;</span></p>
+                      <p class="card-text"><span id="descriptionWeather"></span></p>
+                    </div>
+                  </div>
+                </li>
+                
+                <li class="list-group-item list-group-item-dark">
+                  
+                  <b>Feels Like: </b><span id="feelslikeWeather"></span><span>&#8451;</span><br>
+                  <b>Max Temp: </b><span id="tempmaxWeather"></span><span>&#8451;</span><br>
+                  <b>Min Temp: </b><span id="tempminWeather"></span><span>&#8451;</span><br>
+                  <b>Pressure: </b><span id="pressureWeather"></span><span>mb</span><br>
+                  <b>Humidity: </b><span id="humidityWeather"></span><span>RH</span><br>
+                </li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          
+          </div>
+      </div>
+  </div>
+</div> 
+
+ 
+
+                       
+  
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="myscript.js"></script>
+
   </body>
   </html>
+
     

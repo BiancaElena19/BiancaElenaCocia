@@ -3,20 +3,30 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     
-  }).addTo(map);
+}).addTo(map);
+
+L.easyButton('fa-info-circle',function(){
+  $('#countryInfoModal').modal("show");
+},'Country Information').addTo(map);
+
+L.easyButton('fa-solid fa-cloud',function(){
+  $('#weatherModal').modal("show");
+  },'Weather Information').addTo(map);
+
+L.easyButton('fa fa-medkit',function(){
+  $('#covidModal').modal("show");
+},'Covid Data').addTo(map);
+
+L.easyButton('fa fa-newspaper-o',function(){
+  $('#newsModal').modal("show");
+},'News Information').addTo(map);
+
+
+
+
+
 
   
-function easyButtons() {
-  if (loadOnce.length == 0) {
-      L.easyButton( '<i class="bi bi-info-lg" data-bs-toggle="modal" data-bs-target="#infoModal"></i>', function(){}).addTo(map);
-     loadOnce.push(1);
-  }
-}
-
- 
-  
-    
-
 var marker = L.marker([51.5, -0.09]).addTo(map);
 var circle = L.circle([51.508, -0.11], {
     color: 'red',
@@ -67,6 +77,7 @@ var streets = L.tileLayer(
     "Satellite": satellite
   };
 
+
   
   
   
@@ -106,6 +117,7 @@ var streets = L.tileLayer(
             if (result.status.name == "ok") {
                 let border = L.geoJSON(result.data[0].geometry).addTo(map);
                 map.fitBounds(border.getBounds());
+                getWeatherInfo();
                     }
                 
                 
@@ -115,7 +127,148 @@ var streets = L.tileLayer(
                 console.log(jqXHR);
             }
           });
-      });
+
+          //---CountryInfo---
+    
+     $.ajax({
+			url: "getCountryInfo.php",
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				country: $('#countrySelect').val(),
+				
+      },
+			success: function(result) {
+
+				console.log(JSON.stringify(result));
+
+				if (result.status.name == "ok") {
+
+					$('#Capital').html(result['data'][0]['capital']);
+					$('#Population').html(result['data'][0]['population']);
+					$('#Languages').html(result['data'][0]['languages']);
+					$('#areaInSqKm').html(result['data'][0]['areaInSqKm']);
+          $('#CurrencyCode').html(result['data'][0]['currencyCode']);
+
+
+         
+					
+
+				}},
+
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+        console.log(jqXHR);
+        
+
+    }
+			
+          
+            
+          
+   
+     
+  });
+
+
+
+  function getWeatherInfo(lat, lng)  {
+  $.ajax({     
+    url:"getWeatherInfo.php",
+    type:"GET",
+    dataType: "json",
+    data: {
+      lat: lat,
+            lng: lon,
+    },
+    success: function(result) {
+
+      console.log(JSON.stringify(result));
+
+      if (result.status.name == "ok") {
+
+
+      $('#placeWeather').html(result.data[0].placeWeather);
+      
+      $('#tempWeather').html(result.data[0].tempWeather);
+      $('#descriptionWeather').html(result.data[0].descriptionWeather);
+      $('#feelslikeWeather').html(result.data[0].feelslikeWeather);
+      $('#tempmaxWeather').html(result.data[0].tempmaxWeather);
+      $('#tempminWeather').html(result.data[0].tempminWeather);
+      $('#pressureWeather').html(result.data[0].pressureWeather);
+      $('#humidityWeather').html(result.data[0].humidityWeather);
+
+      }
+      
+				
+      
+    },
+   
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+      console.log(jqXHR);
+  
+    }  
+    
+  
+  });
+}
+
+  
+
+
+
+
+
+  
+
+
+});
+       
+
+    
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+      
+
+
+    
+
+
+
+
+
+
+   
+ 
+
+
+
+
+
+
+
+
+   
+	
+
+     
+	
+
+
+
+      
+
      
 
      
