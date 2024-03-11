@@ -117,16 +117,42 @@ var streets = L.tileLayer(
             if (result.status.name == "ok") {
                 let border = L.geoJSON(result.data[0].geometry).addTo(map);
                 map.fitBounds(border.getBounds());
-                getWeatherInfo();
+                
+               
+                
                     }
                 
-                
+                    
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus, errorThrown);
                 console.log(jqXHR);
             }
           });
+
+          // opencage
+          $.ajax({
+            url: "openCage.php",
+            type: 'POST',
+            dataType: 'json',
+            data:{q: $('#countrySelect option:selected').text()},
+            success: function(result) {
+          console.log( result);
+              if (result.status.name == "ok") {
+                  weatherInfo(result.data.lat, result.data.lng);
+                  
+                  
+                 
+                  
+                      }
+                  
+                      
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.log(textStatus, errorThrown);
+                  console.log(jqXHR);
+              }
+            });
 
           //---CountryInfo---
     
@@ -138,9 +164,10 @@ var streets = L.tileLayer(
 				country: $('#countrySelect').val(),
 				
       },
-			success: function(result) {
+			 success: function(result) {
 
 				console.log(JSON.stringify(result));
+       
 
 				if (result.status.name == "ok") {
 
@@ -149,37 +176,33 @@ var streets = L.tileLayer(
 					$('#Languages').html(result['data'][0]['languages']);
 					$('#areaInSqKm').html(result['data'][0]['areaInSqKm']);
           $('#CurrencyCode').html(result['data'][0]['currencyCode']);
+        
+
+             
+          }
+          
+
+          },
 
 
-         
-					
-
-				}},
-
-      error: function(jqXHR, textStatus, errorThrown) {
+        error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
         console.log(jqXHR);
         
 
-    }
-			
-          
-            
-          
-   
-     
-  });
+        }
+		    });
 
 
 
-  function getWeatherInfo(lat, lng)  {
-  $.ajax({     
+  function weatherInfo(lat, lon)  {
+   $.ajax({     
     url:"getWeatherInfo.php",
     type:"GET",
     dataType: "json",
     data: {
       lat: lat,
-            lng: lon,
+      lng: lon,
     },
     success: function(result) {
 
@@ -187,16 +210,14 @@ var streets = L.tileLayer(
 
       if (result.status.name == "ok") {
 
-
-      $('#placeWeather').html(result.data[0].placeWeather);
-      
-      $('#tempWeather').html(result.data[0].tempWeather);
-      $('#descriptionWeather').html(result.data[0].descriptionWeather);
-      $('#feelslikeWeather').html(result.data[0].feelslikeWeather);
-      $('#tempmaxWeather').html(result.data[0].tempmaxWeather);
-      $('#tempminWeather').html(result.data[0].tempminWeather);
-      $('#pressureWeather').html(result.data[0].pressureWeather);
-      $('#humidityWeather').html(result.data[0].humidityWeather);
+    
+      $('#placeWeather').html(result.data.name);
+      $('#tempWeather').html(result.data.main.temp);
+      $('#feelslikeWeather').html(result.data.main.feels_like);
+      $('#tempmaxWeather').html(result.data.main.temp_max);
+      $('#tempminWeather').html(result.data.main.temp_min);
+      $('#pressureWeather').html(result.data.main.pressure);
+      $('#humidityWeather').html(result.data.main.humidity);
 
       }
       
@@ -212,6 +233,45 @@ var streets = L.tileLayer(
     
   
   });
+
+
+
+
+
+
+  function covidInfo(code){
+    
+    
+    $.ajax({     
+      url:"getCovidInfo.php",
+      type:"GET",
+      dataType: "json",
+      data: {
+             countryCode: code,
+      },
+      success: function(result) {
+
+        console.log(JSON.stringify(result));
+  
+        if (result.status.name == "ok") {
+              
+          
+
+        }
+  
+        
+          
+        }, 
+    
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus, errorThrown);
+          console.log(jqXHR);
+      
+        }   
+  })         
+}
+
+
 }
 
   
@@ -231,8 +291,6 @@ var streets = L.tileLayer(
 
 
 
- 
- 
 
 
 

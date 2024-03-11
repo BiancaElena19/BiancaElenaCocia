@@ -89,22 +89,24 @@
               <ul class="list-group">
                 <li class="list-group-item list-group-item-dark justify-content-center">
                   <div class="card text-white bg-primary mb-3" style="width:auto;" id="weatherIcon">
-                    <div class="card-header"><span id= "placeWeather"></span></div>
+                    <div class="card-header"><span id="placeWeather"></span></div>
                     <img class="card-img-top" src="/project1/weather.jpg" alt="Weather Icon">
-                    <div class="card-body">
-                      <p class="card-text"><span id="tempWeather"></span><span>&#8451;</span></p>
-                      <p class="card-text"><span id="descriptionWeather"></span></p>
+                    <div class="card-body"></div>
+                    <p class="card-text"><span id="tempWeather"></span><span>&#8457;</span></p>
+                    
+                      
+                      
                     </div>
                   </div>
                 </li>
                 
                 <li class="list-group-item list-group-item-dark">
                   
-                  <b>Feels Like: </b><span id="feelslikeWeather"></span><span>&#8451;</span><br>
-                  <b>Max Temp: </b><span id="tempmaxWeather"></span><span>&#8451;</span><br>
-                  <b>Min Temp: </b><span id="tempminWeather"></span><span>&#8451;</span><br>
-                  <b>Pressure: </b><span id="pressureWeather"></span><span>mb</span><br>
-                  <b>Humidity: </b><span id="humidityWeather"></span><span>RH</span><br>
+                      <b>Feels Like: </b>&nbsp&nbsp<span id="feelslikeWeather"></span><span>&#8457;</span><br>
+                      <b>Max Temp: </b>&nbsp&nbsp<span id="tempmaxWeather"></span><span>&#8457;</span><br>
+                      <b>Min Temp: </b>&nbsp&nbsp<span id="tempminWeather"></span><span>&#8457;</span><br>
+                      <b>Pressure: </b>&nbsp&nbsp<span id="pressureWeather"></span><span>mb</span><br>
+                      <b>Humidity: </b>&nbsp&nbsp<span id="humidityWeather"></span><span>RH</span><br>
                 </li>
               </ul>
             </div>
@@ -116,6 +118,139 @@
       </div>
   </div>
 </div> 
+
+ <!--Covid Data Modal-->
+<div class="modal fade" id="covidModal" role="dialog">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title">Covid-19 Cases Data</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body bg-success">
+        <div class="table-responsive-sm">
+          <table class="table table-bordered table-striped">
+            
+            <tr>
+              <td>
+                <b>Continent:</b> 
+              </td>
+              <td id="covidContinent">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Country:</b> 
+              </td>
+              <td id="covidCountry">
+                
+              </td>
+    
+            </tr>
+            <tr>
+              <td>
+                <b>Population:</b> 
+              </td>
+              <td id="covidPopulation">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Cases:</b> 
+              </td>
+              <td id="covidCases">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Active:</b> 
+              </td>
+              <td id="covidActive">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Critical:</b> 
+              </td>
+              <td id="covidCritical">
+                
+              </td>
+    
+            </tr>
+            <tr>
+              <td>
+                <b>Deaths:</b> 
+              </td>
+              <td id="coviddeaths">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Recovered:</b> 
+              </td>
+              <td id="covidRecovered">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Tests:</b> 
+              </td>
+              <td id="covidTests">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Cases:</b> 
+              </td>
+              <td id="covidTodaysCases">
+                
+              </td>
+    
+            </tr>
+    
+            <tr>
+              <td>
+                <b>Todays Deaths:</b> 
+              </td>
+              <td id="covidTodaysDeaths">
+                
+              </td>
+    
+            </tr>
+        </table>
+      </div>
+      </div>
+      <div class="modal-footer bg-success">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+</div>
+</div>
 
  
 
