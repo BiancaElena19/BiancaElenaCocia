@@ -117,10 +117,14 @@ var streets = L.tileLayer(
             if (result.status.name == "ok") {
                 let border = L.geoJSON(result.data[0].geometry).addTo(map);
                 map.fitBounds(border.getBounds());
+               
                 
                
                 
                     }
+                    
+                    
+                   
                 
                     
             },
@@ -140,6 +144,7 @@ var streets = L.tileLayer(
           console.log( result);
               if (result.status.name == "ok") {
                   weatherInfo(result.data.lat, result.data.lng);
+
                   
                   
                  
@@ -237,17 +242,20 @@ var streets = L.tileLayer(
 
 
 
-
-
-  function covidInfo(code){
+  
+  
     
-    
-    $.ajax({     
+     covidInfo();
+    function covidInfo(code){
+
+    console.log(code);
+     
+      $.ajax({     
       url:"getCovidInfo.php",
       type:"GET",
       dataType: "json",
       data: {
-             countryCode: code,
+        countryCode:code,
       },
       success: function(result) {
 
@@ -255,6 +263,14 @@ var streets = L.tileLayer(
   
         if (result.status.name == "ok") {
               
+           
+            $('#covidContinent').html(result['data'][0]['covidContinent']);
+            $('#covidCountry').html(result['data'][0]['covidCountry']);
+            $('#covidPopulation').html(result['data'][0]['covidPopulation']);
+            $('#covidCases').html(result['data'][0]['covidCases']);
+            $('#covidDeaths').html(result['data'][0]['covidDeaths']);
+            $('#covidRecovered').html(result['data'][0]['covidRecovered']);
+            
           
 
         }
