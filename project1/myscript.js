@@ -245,7 +245,7 @@ var streets = L.tileLayer(
   
   
     
-     covidInfo();
+    covidInfo();
     function covidInfo(code){
 
     console.log(code);
