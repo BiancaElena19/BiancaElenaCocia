@@ -7,7 +7,7 @@
 
 	$executionStartTime = microtime(true);
 
-    $url='https://api.api-ninjas.com/v1/covid19?country=' . $_REQUEST['covidCountry'];
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-Api-Key:o5YpMzAXcECHuR4HyWcrRg==ncP7a9VPmxFbrFRa']);
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
