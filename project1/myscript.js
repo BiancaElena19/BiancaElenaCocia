@@ -264,13 +264,15 @@ var streets = L.tileLayer(
         if (result.status.name == "ok") {
               
            
-            $('#covidContinent').html(result['data'][0]['covidContinent']);
-            $('#covidCountry').html(result['data'][0]['covidCountry']);
-            $('#covidPopulation').html(result['data'][0]['covidPopulation']);
-            $('#covidCases').html(result['data'][0]['covidCases']);
-            $('#covidDeaths').html(result['data'][0]['covidDeaths']);
-            $('#covidRecovered').html(result['data'][0]['covidRecovered']);
-            
+           
+          $('#covidContinent').html(['data'][0]['covidContinent']);
+          $('#covidCountry').html(['data'][0]['covidcountry']);
+          $('#covidPopulation').html((['data'][0]['covidPopulation']));
+          $('#covidCases').html(['data'][0]['covidCases']);
+          $('#covidDeaths').html(['data'][0]['covidDeaths']);
+          $('#covidRecovered').html(['data'][0]['covidRecovered']);
+       
+         
           
 
         }
