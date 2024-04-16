@@ -263,8 +263,6 @@ var streets = L.tileLayer(
   
         if (result.status.name == "ok") {
               
-           
-           
           $('#covidContinent').html(['data'][0]['covidContinent']);
           $('#covidCountry').html(['data'][0]['covidcountry']);
           $('#covidPopulation').html((['data'][0]['covidPopulation']));

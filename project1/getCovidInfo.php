@@ -9,8 +9,8 @@
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_RETURNtRANSFER, true);
-curl_setopt($ch, CURLOPT_URL,$url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_URL, "https://api.api-ninjas.com/v1/covid19?country=");
 curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-Api-Key:o5YpMzAXcECHuR4HyWcrRg==ncP7a9VPmxFbrFRa']);
 
 $result=curl_exec($ch);
