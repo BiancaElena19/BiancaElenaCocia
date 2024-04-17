@@ -244,21 +244,22 @@ var streets = L.tileLayer(
 
   
   
+  covidInfo($('#countrySelect option:selected').text());
     
-    covidInfo();
-    function covidInfo(code){
+    function covidInfo(country){
 
-    console.log(code);
+    
      
       $.ajax({     
       url:"getCovidInfo.php",
       type:"GET",
       dataType: "json",
       data: {
-        countryCode:code,
+        covidCountry: country,
       },
       success: function(result) {
 
+       
         console.log(JSON.stringify(result));
   
         if (result.status.name == "ok") {
@@ -290,7 +291,6 @@ var streets = L.tileLayer(
 
 }
 
-  
 
 
 
