@@ -82,20 +82,51 @@ var streets = L.tileLayer(
   
   
   
-  //-----geoJson------
+    //-----geoJson------
     $.ajax({
-        url: "geoJson.php",
+      url: "geoJson.php",
+      type: 'POST',
+      dataType: 'json',
+      success: function(result) {
+    console.log('populate options' , result);
+        if (result.status.name == "ok") {
+            for (var i=0; i<result.data.length; i++) {
+                        $('#countrySelect').append(`<option value="${result.data[i].code}">${result.data[i].name}</option>`);
+                    }
+                }
+            
+            
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            console.log(jqXHR);
+        }
+      });
+
+
+
+      //----getBorder----
+    $('#countrySelect').change(function(){
+      $.ajax({
+        url: "getBorder.php",
         type: 'POST',
         dataType: 'json',
+        data:{countryCode: $('#countrySelect').val()},
         success: function(result) {
       console.log('populate options' , result);
           if (result.status.name == "ok") {
-              for (var i=0; i<result.data.length; i++) {
-                          $('#countrySelect').append(`<option value="${result.data[i].code}">${result.data[i].name}</option>`);
-                      }
+              let border = L.geoJSON(result.data[0].geometry).addTo(map);
+              map.fitBounds(border.getBounds());
+             
+              
+             
+              
                   }
+                  
+                  
+                 
               
-              
+                  
           },
           error: function(jqXHR, textStatus, errorThrown) {
               console.log(textStatus, errorThrown);
@@ -103,28 +134,22 @@ var streets = L.tileLayer(
           }
         });
 
-
-
-        //----getBorder----
-      $('#countrySelect').change(function(){
+        // opencage
         $.ajax({
-          url: "getBorder.php",
+          url: "openCage.php",
           type: 'POST',
           dataType: 'json',
-          data:{countryCode: $('#countrySelect').val()},
+          data:{q: $('#countrySelect option:selected').text()},
           success: function(result) {
-        console.log('populate options' , result);
+        console.log( result);
             if (result.status.name == "ok") {
-                let border = L.geoJSON(result.data[0].geometry).addTo(map);
-                map.fitBounds(border.getBounds());
-               
+                weatherInfo(result.data.lat, result.data.lng);
+
+                
                 
                
                 
                     }
-                    
-                    
-                   
                 
                     
             },
@@ -134,178 +159,160 @@ var streets = L.tileLayer(
             }
           });
 
-          // opencage
-          $.ajax({
-            url: "openCage.php",
-            type: 'POST',
-            dataType: 'json',
-            data:{q: $('#countrySelect option:selected').text()},
-            success: function(result) {
-          console.log( result);
-              if (result.status.name == "ok") {
-                  weatherInfo(result.data.lat, result.data.lng);
-
-                  
-                  
-                 
-                  
-                      }
-                  
-                      
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                  console.log(textStatus, errorThrown);
-                  console.log(jqXHR);
-              }
-            });
-
-          //---CountryInfo---
-    
-     $.ajax({
-			url: "getCountryInfo.php",
-			type: 'POST',
-			dataType: 'json',
-			data: {
-				country: $('#countrySelect').val(),
-				
-      },
-			 success: function(result) {
-
-				console.log(JSON.stringify(result));
-       
-
-				if (result.status.name == "ok") {
-
-					$('#Capital').html(result['data'][0]['capital']);
-					$('#Population').html(result['data'][0]['population']);
-					$('#Languages').html(result['data'][0]['languages']);
-					$('#areaInSqKm').html(result['data'][0]['areaInSqKm']);
-          $('#CurrencyCode').html(result['data'][0]['currencyCode']);
-        
-
-             
-          }
-          
-
-          },
-
-
-        error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus, errorThrown);
-        console.log(jqXHR);
-        
-
-        }
-		    });
-
-
-
-  function weatherInfo(lat, lon)  {
-   $.ajax({     
-    url:"getWeatherInfo.php",
-    type:"GET",
-    dataType: "json",
+        //---CountryInfo---
+  
+   $.ajax({
+    url: "getCountryInfo.php",
+    type: 'POST',
+    dataType: 'json',
     data: {
-      lat: lat,
-      lng: lon,
+      country: $('#countrySelect').val(),
+      
     },
-    success: function(result) {
+     success: function(result) {
 
       console.log(JSON.stringify(result));
+     
 
       if (result.status.name == "ok") {
 
-    
-      $('#placeWeather').html(result.data.name);
-      $('#tempWeather').html(result.data.main.temp);
-      $('#feelslikeWeather').html(result.data.main.feels_like);
-      $('#tempmaxWeather').html(result.data.main.temp_max);
-      $('#tempminWeather').html(result.data.main.temp_min);
-      $('#pressureWeather').html(result.data.main.pressure);
-      $('#humidityWeather').html(result.data.main.humidity);
+        $('#Capital').html(result['data'][0]['capital']);
+        $('#Population').html(result['data'][0]['population']);
+        $('#Languages').html(result['data'][0]['languages']);
+        $('#areaInSqKm').html(result['data'][0]['areaInSqKm']);
+        $('#CurrencyCode').html(result['data'][0]['currencyCode']);
+      
+
+           
+        }
+        
+
+        },
+
+
+      error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+      console.log(jqXHR);
+      
 
       }
+      });
+
+
+
+function weatherInfo(lat, lon)  {
+ $.ajax({     
+  url:"getWeatherInfo.php",
+  type:"GET",
+  dataType: "json",
+  data: {
+    lat: lat,
+    lng: lon,
+  },
+  success: function(result) {
+
+    console.log(JSON.stringify(result));
+
+    if (result.status.name == "ok") {
+
+  
+    $('#placeWeather').html(result.data.name);
+    $('#tempWeather').html(result.data.main.temp);
+    $('#feelslikeWeather').html(result.data.main.feels_like);
+    $('#tempmaxWeather').html(result.data.main.temp_max);
+    $('#tempminWeather').html(result.data.main.temp_min);
+    $('#pressureWeather').html(result.data.main.pressure);
+    $('#humidityWeather').html(result.data.main.humidity);
+
+    }
+    
       
-				
-      
-    },
+    
+  },
+ 
+  error: function(jqXHR, textStatus, errorThrown) {
+    console.log(textStatus, errorThrown);
+    console.log(jqXHR);
+
+  }  
+  
+
+});
+
+
+
+
+
+
+
+  
+function covidInfo(country){
+
+    
+     
+  $.ajax({     
+  url:"getCovidInfo.php",
+  type:"GET",
+  dataType: "json",
+  data: {
+    covidCountry: country,
+  },
+  success: function(result) {
+
    
+    console.log(JSON.stringify(result));
+
+    if (result.status.name == "ok") {
+          
+      $('#covidContinent').html(['data'][0]['covidContinent']);
+      $('#covidCountry').html(['data'][0]['covidcountry']);
+      $('#covidPopulation').html((['data'][0]['covidPopulation']));
+      $('#covidCases').html(['data'][0]['covidCases']);
+      $('#covidDeaths').hvtml(['data'][0]['covidDeaths']);
+      $('#covidRecovered').html(['data'][0]['covidRecovered']);
+   
+     
+      
+
+    }
+
+    
+      
+    }, 
+
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus, errorThrown);
       console.log(jqXHR);
   
-    }  
-    
-  
-  });
+    }   
+})         
+}
+
+
+}
+
+    });
 
 
 
 
-  
-  
-  covidInfo($('#countrySelect option:selected').text());
-    
-    function covidInfo(country){
 
-    
-     
-      $.ajax({     
-      url:"getCovidInfo.php",
-      type:"GET",
-      dataType: "json",
-      data: {
-        covidCountry: country,
-      },
-      success: function(result) {
+
+
+
+
 
        
-        console.log(JSON.stringify(result));
-  
-        if (result.status.name == "ok") {
-              
-          $('#covidContinent').html(['data'][0]['covidContinent']);
-          $('#covidCountry').html(['data'][0]['covidcountry']);
-          $('#covidPopulation').html((['data'][0]['covidPopulation']));
-          $('#covidCases').html(['data'][0]['covidCases']);
-          $('#covidDeaths').html(['data'][0]['covidDeaths']);
-          $('#covidRecovered').html(['data'][0]['covidRecovered']);
        
          
-          
-
-        }
-  
-        
-          
-        }, 
-    
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.log(textStatus, errorThrown);
-          console.log(jqXHR);
-      
-        }   
-  })         
-}
-
-
-}
-
-
-
-
-
-
-  
-
-
-});
        
-
-    
-
-
-
+       
+   
+              
+       
+           
+       
+       
 
 
 
